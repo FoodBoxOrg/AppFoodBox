@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\FoodRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[ORM\Entity(repositoryClass: FoodRepository::class)]
+class Food
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,14 +18,19 @@ class User
     #[ORM\Column(length: 32)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 64, unique: true)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 32)]
-    private ?string $password = null;
+    #[ORM\Column(length: 32, nullable: true)]
+    private ?string $origin = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $imageId = null;
+
+    #[ORM\OneToMany(targetEntity: FoodTags::class, mappedBy: 'food', cascade: ['persist', 'remove'])]
+    private Collection $foodTags;
+
+    public function __construct()
+    {
+        $this->foodTags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -38,31 +45,17 @@ class User
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getOrigin(): ?string
     {
-        return $this->email;
+        return $this->origin;
     }
 
-    public function setEmail(string $email): static
+    public function setOrigin(?string $origin): static
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
+        $this->origin = $origin;
         return $this;
     }
 
@@ -74,7 +67,11 @@ class User
     public function setImageId(?int $imageId): static
     {
         $this->imageId = $imageId;
-
         return $this;
+    }
+
+    public function getFoodTags(): Collection
+    {
+        return $this->foodTags;
     }
 }
