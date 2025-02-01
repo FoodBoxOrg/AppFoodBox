@@ -1,0 +1,25 @@
+{# templates/foods/list.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Tags{% endblock %}
+
+{% block body %}
+    <h1>Liste des Tags</h1>
+
+    {% if tags is not empty %}
+        <ul>
+            {% for tag in tags %}
+                <li style="margin-bottom: 1em;">
+                    <div>
+                        <strong>{{ tag.name }}</strong>
+                    </div>
+                    <div>
+                        <a href="{{ path('tags_show', { id: tag.id }) }}">Voir les plats</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun Tag n'est disponible.</p>
+    {% endif %}
+{% endblock %}

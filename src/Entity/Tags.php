@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\TagsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TagsRepository;
 
 #[ORM\Entity(repositoryClass: TagsRepository::class)]
 class Tags

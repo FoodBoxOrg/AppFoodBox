@@ -1,0 +1,28 @@
+{# templates/foods/list.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Foods{% endblock %}
+
+{% block body %}
+    <h1>Liste des Foods</h1>
+
+    {% if foods is not empty %}
+        <ul>
+            {% for food in foods %}
+                <li style="margin-bottom: 1em;">
+                    <div>
+                        <strong>{{ food.name }}</strong>
+                        {% if food.origin is not null %}
+                            &mdash; Origine : {{ food.origin }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <a href="{{ path('food_show', { id: food.id }) }}">Voir les reviews</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun food n'est disponible.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{# templates/foods/create.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Food{% endblock %}
+
+{% block body %}
+    <h1>Créer un Food</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+
+    <button type="submit" class="btn btn-primary">Créer</button>
+    {{ form_end(form) }}
+{% endblock %}

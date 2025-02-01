@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d78cfdd9d6b68f3414686ad73281cad6",
+    "content-hash": "f9a5168318bfc575c1fb3b00af8267fd",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -4257,16 +4257,16 @@
         },
         {
             "name": "symfony/security-bundle",
-            "version": "v7.2.2",
+            "version": "v7.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-bundle.git",
-                "reference": "e7b04b503a4eb49307b9997ac9370f403c2f5198"
+                "reference": "721de227035c6e4c322fb7dd4839586d58bc0cf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/e7b04b503a4eb49307b9997ac9370f403c2f5198",
-                "reference": "e7b04b503a4eb49307b9997ac9370f403c2f5198",
+                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/721de227035c6e4c322fb7dd4839586d58bc0cf5",
+                "reference": "721de227035c6e4c322fb7dd4839586d58bc0cf5",
                 "shasum": ""
             },
             "require": {
@@ -4343,7 +4343,7 @@
             "description": "Provides a tight integration of the Security component into the Symfony full-stack framework",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-bundle/tree/v7.2.2"
+                "source": "https://github.com/symfony/security-bundle/tree/v7.2.3"
             },
             "funding": [
                 {
@@ -4359,7 +4359,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-30T18:55:54+00:00"
+            "time": "2025-01-07T09:39:55+00:00"
         },
         {
             "name": "symfony/security-core",
