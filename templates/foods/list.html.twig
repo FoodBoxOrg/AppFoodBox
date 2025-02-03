@@ -1,28 +1,62 @@
-{# templates/foods/list.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des Foods{% endblock %}
 
 {% block body %}
-    <h1>Liste des Foods</h1>
+    <div class="max-w-4xl mx-auto my-8 bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold mb-4">Liste de tous les Foods</h1>
 
-    {% if foods is not empty %}
-        <ul>
-            {% for food in foods %}
-                <li style="margin-bottom: 1em;">
-                    <div>
-                        <strong>{{ food.name }}</strong>
-                        {% if food.origin is not null %}
-                            &mdash; Origine : {{ food.origin }}
-                        {% endif %}
-                    </div>
-                    <div>
-                        <a href="{{ path('food_show', { id: food.id }) }}">Voir les reviews</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun food n'est disponible.</p>
-    {% endif %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse">
+                <thead class="bg-gray-100">
+                <tr>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">ID</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Nom</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Origine</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Note Moyenne</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Noter</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for food in foods %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border-b border-gray-200">{{ food.id }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ food.name }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ food.origin }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">
+                            {% if food.averageRating is null %}
+                                Pas encore noté
+                            {% else %}
+                                ⭐ {{ food.averageRating }}/5
+                            {% endif %}
+                        </td>
+                        <td class="py-2 px-4 border-b border-gray-200">
+                            <a
+                                    href="{{ path('food_review', {id: food.id}) }}"
+                                    class="text-blue-500 hover:text-blue-700 underline"
+                            >
+                                Noter
+                            </a>
+                        </td>
+                        <td class="py-2 px-4 border-b border-gray-200">
+                            <a
+                                    href="{{ path('review', {id: food.id}) }}"
+                                    class="text-blue-500 hover:text-blue-700 underline"
+                            >
+                                Voir les avis
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <p class="mt-6 text-gray-700">
+            Si le Food que vous voulez noter n'est pas listé,
+            <a href="{{ path('food_create') }}" class="text-blue-500 hover:text-blue-700 underline">
+                cliquez ici pour le créer
+            </a>
+        </p>
+    </div>
 {% endblock %}

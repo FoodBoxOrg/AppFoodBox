@@ -1,14 +1,20 @@
 {# templates/tags/create.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un Tag{% endblock %}
+{% block title %}Créer un nouveau Food{% endblock %}
 
 {% block body %}
-    <h1>Créer un Tag</h1>
+    <h1>Créer un nouveau Food</h1>
 
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-
-    <button type="submit" class="btn btn-primary">Créer</button>
-    {{ form_end(form) }}
+    <form method="POST" action="">
+        <div>
+            <label for="name">Nom du Food :</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="origin">Origine (optionnel) :</label>
+            <input type="text" id="origin" name="origin">
+        </div>
+        <button type="submit">Créer</button>
+    </form>
 {% endblock %}

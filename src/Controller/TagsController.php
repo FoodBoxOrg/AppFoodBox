@@ -3,62 +3,104 @@
 namespace App\Controller;
 
 use App\Entity\Tags;
-use App\Form\TagsType;
 use App\Repository\TagsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/tags')]
+#[Route('/api/tags')]
 final class TagsController extends AbstractController
 {
-    #[Route('/', name: 'tags_list')]
+    /**
+     * Liste tous les Tags
+     * GET /api/tags
+     */
+    #[Route('/', name: 'api_tags_list', methods: ['GET'])]
     public function list(TagsRepository $tagsRepository): Response
     {
         $tags = $tagsRepository->findAll();
-        $data = [];
 
-        foreach ($tags as $tag) {
-            $data[] = [
-                'id'       => $tag->getId(),
-                'name'     => $tag->getName(),
+        // On transforme chaque Tag en tableau associatif
+        $data = array_map(function (Tags $tag) {
+            return [
+                'id'   => $tag->getId(),
+                'name' => $tag->getName(),
             ];
-        }
+        }, $tags);
 
-        return $this->render('tags/list.html.twig', [
-            'tags' => $data,
-        ]);
+        return $this->json($data);
     }
-    #[Route('/{id}', name: 'tags_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+
+    /**
+     * Affiche un Tag précis
+     * GET /api/tags/{id}
+     */
+    #[Route('/{id}', name: 'api_tags_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id, TagsRepository $tagsRepository): Response
     {
         $tag = $tagsRepository->find($id);
 
-        return $this->render('tags/show.html.twig', [
-            'tag' => $tag,
-        ]);
-    }
-    #[Route('/create', name: 'tags_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $tag = new Tags();
-        $form = $this->createForm(TagsType::class, $tag);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $tag = $entityManager->getRepository(Tags::class)->findOneBy(['name' => $tag->getName()]);
-            if ($tag) {
-                $this->addFlash('danger', 'Ce tag existe déjà');
-                return $this->redirectToRoute('tags_create');
-            }
-            $entityManager->persist($tag);
-            $entityManager->flush();
+        if (!$tag) {
+            return $this->json(['message' => 'Tag non trouvé'], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->render('tags/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->json([
+            'id'   => $tag->getId(),
+            'name' => $tag->getName(),
         ]);
+    }
+
+    /**
+     * Crée un nouveau Tag
+     * POST /api/tags
+     *
+     * Ex. de body JSON :
+     * {
+     *   "name": "Italien"
+     * }
+     */
+    #[Route('/', name: 'api_tags_create', methods: ['POST'])]
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        TagsRepository $tagsRepository
+    ): Response {
+        $requestData = $request->toArray();
+        $name = $requestData['name'] ?? null;
+
+        if (!$name) {
+            return $this->json(
+                ['message' => 'Le champ "name" est obligatoire.'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        $existingTag = $tagsRepository->findOneBy(['name' => $name]);
+        if ($existingTag) {
+            return $this->json(
+                ['message' => 'Ce tag existe déjà'],
+                Response::HTTP_CONFLICT
+            );
+        }
+
+        // Création du nouveau Tag
+        $tag = new Tags();
+        $tag->setName($name);
+
+        $entityManager->persist($tag);
+        $entityManager->flush();
+
+        return $this->json(
+            [
+                'message' => 'Tag créé avec succès',
+                'tag'     => [
+                    'id'   => $tag->getId(),
+                    'name' => $tag->getName(),
+                ],
+            ],
+            Response::HTTP_CREATED
+        );
     }
 }

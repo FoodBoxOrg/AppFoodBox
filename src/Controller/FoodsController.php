@@ -18,9 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 final class FoodsController extends AbstractController
 {
     /**
-     * Récupère tous les foods et les affiche via Twig.
+     * Récupère tous les foods et renvoie un JSON.
      *
-     * Exemple d'appel : GET /foods/
+     * Exemple d'appel : GET /api/foods/
      */
     #[Route('/', name: 'food_list', methods: ['GET'])]
     public function list(FoodRepository $foodRepository): Response
@@ -29,7 +29,6 @@ final class FoodsController extends AbstractController
         $data = [];
 
         foreach ($foods as $food) {
-            // On parcourt les FoodTags pour récupérer le nom de chaque tag
             $tags = [];
             foreach ($food->getFoodTags() as $foodTag) {
                 $tags[] = $foodTag->getTag()->getName();
@@ -44,15 +43,13 @@ final class FoodsController extends AbstractController
             ];
         }
 
-        return $this->render('foods/list.html.twig', [
-            'foods' => $data,
-        ]);
+        return $this->json($data);
     }
 
     /**
-     * Récupère un food en particulier par son id et l'affiche via Twig.
+     * Récupère un food par son id et renvoie un JSON.
      *
-     * Exemple d'appel : GET /foods/42
+     * Exemple d'appel : GET /api/foods/42
      */
     #[Route('/{id}', name: 'food_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id, FoodRepository $foodRepository): Response
@@ -60,7 +57,7 @@ final class FoodsController extends AbstractController
         $food = $foodRepository->find($id);
 
         if (!$food) {
-            throw $this->createNotFoundException('Food non trouvé');
+            return $this->json(['message' => 'Food non trouvé'], Response::HTTP_NOT_FOUND);
         }
 
         $tags = [];
@@ -74,68 +71,37 @@ final class FoodsController extends AbstractController
             'origin'   => $food->getOrigin(),
             'imageId'  => $food->getImageId(),
             'tags'     => $tags,
+            'averageRating' => $food->getAverageRating() ?? 'Pas de note',
+            'reviews' => $food->getComment()
         ];
 
-        return $this->render('foods/show.html.twig', [
-            'food' => $data,
-        ]);
+        return $this->json($data);
     }
 
     /**
      * Crée un nouveau Food.
      *
-     * - GET  /foods/create : affiche le formulaire de création.
-     * - POST /foods/create : traite la soumission du formulaire.
-     *
-     * Exemple d'appel (soumission du formulaire) :
-     *   - Les données sont récupérées depuis $request->request (type application/x-www-form-urlencoded ou multipart/form-data).
+     * Exemple d'appel : POST /foods/create
+     * Body JSON :
+     * {
+     *   "name": "Pizza",
+     *   "origin": "Italie",
+     *   "imageId": "pizza.jpg",
+     *   "tags": ["Italien", "FastFood"]
+     * }
      */
     #[Route('/create', name: 'food_create', methods: ['GET', 'POST'])]
-    public function create(
-        Request $request,
-        EntityManagerInterface $em,
-        TagsRepository $tagsRepository
-    ): Response {
+    public function create(Request $request, EntityManagerInterface $em): Response
+    {
         $food = new Food();
         $form = $this->createForm(FoodsType::class, $food);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // Les champs "name", "origin" et "imageId" ont déjà été affectés à l'objet $food
-            // Récupération de la valeur du champ non mappé "tags"
-            $tagsInput = $form->get('tags')->getData();
-
-            // Persistance du Food
             $em->persist($food);
-
-            // Traitement des tags s'il y a une saisie
-            if (!empty($tagsInput)) {
-                // On suppose que les tags sont saisis sous forme d'une chaîne séparée par des virgules (ex: "FastFood,Italien")
-                $tagNames = array_map('trim', explode(',', $tagsInput));
-                foreach ($tagNames as $tagName) {
-                    if (empty($tagName)) {
-                        continue;
-                    }
-                    // Recherche d'un tag existant
-                    $tag = $tagsRepository->findOneBy(['name' => $tagName]);
-                    if (!$tag) {
-                        // Création du tag s'il n'existe pas
-                        $tag = new Tags();
-                        $tag->setName($tagName);
-                        $em->persist($tag);
-                    }
-
-                    // Création de la relation entre Food et Tag via FoodTags
-                    $foodTag = new FoodTags();
-                    $foodTag->setFood($food);
-                    $foodTag->setTag($tag);
-                    $em->persist($foodTag);
-                }
-            }
-
             $em->flush();
-            $this->addFlash('success', 'Food créé avec succès');
 
+            $this->addFlash('success', 'Food créé avec succès !');
             return $this->redirectToRoute('food_list');
         }
 
@@ -144,8 +110,9 @@ final class FoodsController extends AbstractController
         ]);
     }
 
+
     /**
-     * Récupère tous les foods ayant un tag donné et les affiche via Twig.
+     * Récupère tous les foods ayant un tag donné et renvoie un JSON.
      *
      * Exemple d'appel : GET /foods/tag/Italien
      */
@@ -155,13 +122,13 @@ final class FoodsController extends AbstractController
         $tag = $tagsRepository->findOneBy(['name' => $tagName]);
 
         if (!$tag) {
-            throw $this->createNotFoundException('Tag non trouvé');
+            return $this->json(['message' => 'Tag non trouvé'], Response::HTTP_NOT_FOUND);
         }
 
-        $foods = [];
+        $foodsData = [];
         foreach ($tag->getFoodTags() as $foodTag) {
             $food = $foodTag->getFood();
-            $foods[] = [
+            $foodsData[] = [
                 'id'      => $food->getId(),
                 'name'    => $food->getName(),
                 'origin'  => $food->getOrigin(),
@@ -169,9 +136,9 @@ final class FoodsController extends AbstractController
             ];
         }
 
-        return $this->render('foods/list_by_tag.html.twig', [
-            'tagName' => $tagName,
-            'foods'   => $foods,
+        return $this->json([
+            'tag'   => $tagName,
+            'foods' => $foodsData,
         ]);
     }
 }

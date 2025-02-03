@@ -24,12 +24,12 @@ class Food
     #[ORM\Column(nullable: true)]
     private ?int $imageId = null;
 
-    #[ORM\OneToMany(targetEntity: FoodTags::class, mappedBy: 'food', cascade: ['persist', 'remove'])]
-    private Collection $foodTags;
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'food', cascade: ['persist', 'remove'])]
+    private Collection $reviews;
 
     public function __construct()
     {
-        $this->foodTags = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,8 +70,26 @@ class Food
         return $this;
     }
 
-    public function getFoodTags(): Collection
+    public function getReviews(): Collection
     {
-        return $this->foodTags;
+        return $this->reviews;
+    }
+
+    public function getComment(): ArrayCollection
+    {
+        return $this->reviews->map(fn(Review $review) => $review->getComment());
+    }
+
+    public function getAverageRating(): ?float
+    {
+        $reviews = $this->getReviews();
+
+        if ($reviews->isEmpty()) {
+            return null;
+        }
+
+        $sum = array_reduce($reviews->toArray(), fn($carry, Review $review) => $carry + $review->getRate(), 0);
+
+        return round($sum / count($reviews), 1);
     }
 }
