@@ -1,17 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}FoodBox{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% block importmap %}{{ importmap('app') }}{% endblock %}{% endblock %}
+</head>
+<body class="bg-zinc-800 text-white min-h-screen">
+<!-- Navbar -->
+<nav class="bg-[#3b3b3e] p-4 fixed top-0 left-0 w-full z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="{{ path('app_homepage') }}" class="text-white text-4xl font-bold">FoodBox</a>
+        <div class="space-x-4 relative">
+            <div class="space-x-4 relative inline-flex items-center">
+                <a href="{{ path('app_homepage') }}" class="text-[#ffffff] hover:text-gray-400">Accueil</a>
+                <a href="{{ path('app_food_reviews') }}" class="text-[#ffffff] hover:text-gray-400">Avis</a>
+                <a href="{{ path('food_list') }}" class="text-[#ffffff] hover:text-gray-400">Nourriture</a>
+                <a href="{{ path('tags_list') }}" class="text-[#ffffff] hover:text-gray-400">Tags</a>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+                {% if app.user %}
+                    <div class="relative inline-flex items-center">
+                        <button id="userMenuButton" class="text-[#945be3] font-semibold">
+                            <img src="https://ui-avatars.com/api/?background=945be3&color=fff&name={{ app.user.username }}" alt="{{ app.user.username }}" class="w-10 h-10 rounded-full object-cover">
+                        </button>
+
+                        <!-- Menu déroulant -->
+                        <div id="userMenu" class="absolute right-0 mr-4 top-10 transform translate-x-8 hidden bg-white shadow-md rounded-md mt-4 w-48">
+                            <a href="{{ path('app_logout') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Déconnexion</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="bg-[#945be3] text-white px-4 py-2 rounded hover:bg-violet-600 transition">Connexion</a>
+                {% endif %}
+            </div>
+
+            <script>
+                // JavaScript pour gérer l'ouverture et la fermeture du menu
+                document.getElementById('userMenuButton').addEventListener('click', function() {
+                    const menu = document.getElementById('userMenu');
+                    menu.classList.toggle('hidden');
+                });
+
+                // Fermer le menu si on clique en dehors
+                document.addEventListener('click', function(event) {
+                    const menu = document.getElementById('userMenu');
+                    const button = document.getElementById('userMenuButton');
+                    if (!button.contains(event.target) && !menu.contains(event.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            </script>
+
+
+    </div>
+</nav>
+
+<!-- Contenu -->
+<div class="container mx-auto mt-16 p-6">
+    {% block body %}
+    {% endblock %}
+</div>
+</body>
 </html>

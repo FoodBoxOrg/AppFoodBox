@@ -22,7 +22,12 @@ sandevistan14 -> Robin Lerouge
    composer install
    ```
 
-3. **Démarrez le serveur** :
+3. **Build Tailwind** :
+   ```bash
+   php bin/console tailwind:build
+   ```
+
+4. **Démarrez le serveur** :
    ```bash
    symfony serve
    ```

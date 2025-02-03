@@ -3,52 +3,47 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div class="flex items-center justify-center bg-[#27272a] pt-[7%]">
+        <div class="bg-[#3b3b3e] p-8 rounded-lg shadow-lg w-full max-w-md">
             {% if error %}
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
                     {{ error.messageKey|trans(error.messageData, 'security') }}
                 </div>
             {% endif %}
 
-            {% if app.user %}
-                <div class="text-gray-700 mb-4">
-                    Connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
-                    <a href="{{ path('app_logout') }}" class="text-blue-500 hover:underline">Déconnexion</a>
-                </div>
-            {% endif %}
-
-            <h1 class="text-2xl font-semibold text-gray-700 text-center mb-6">Connexion</h1>
+            <h1 class="text-2xl font-semibold text-[#ffffff] text-center mb-6">Connexion</h1>
 
             <form method="post" class="space-y-4">
                 <div>
-                    <label for="inputEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <label for="inputEmail" class="block text-sm font-medium text-[#ffffff]">Email</label>
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
-                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                           class="mt-1 block w-full px-4 py-2 border border-[#515153] bg-[#515153] text-white rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                            autocomplete="email" required autofocus>
                 </div>
 
+
                 <div>
-                    <label for="inputPassword" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                    <label for="inputPassword" class="block text-sm font-medium text-[#ffffff]">Mot de passe</label>
                     <input type="password" name="password" id="inputPassword"
-                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                           class="mt-1 block w-full px-4 py-2 border border-[#515153] bg-[#515153] rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                            autocomplete="current-password" required>
                 </div>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                 <div class="flex items-center">
-                    <input type="checkbox" name="_remember_me" id="rememberMe" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
-                    <label for="rememberMe" class="ml-2 block text-sm text-gray-900">Se souvenir de moi</label>
+                    <input type="checkbox" name="_remember_me" id="rememberMe"
+                           class="h-4 w-4 accent-[#a572e8] border-gray-300 rounded">
+                    <label for="rememberMe" class="ml-2 block text-sm text-[#ffffff]">Se souvenir de moi</label>
                 </div>
 
                 <div class="mt-4 text-right">
-                    <a href="{{ path('app_register') }}" class="text-blue-700 px-4 py-2 hover:text-blue-900">
+                    <a href="{{ path('app_register') }}" class="text-[#a572e8] px-4 py-2 hover:text-[#945be3]">
                         Créer un compte
                     </a>
                 </div>
 
-                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+                <button type="submit" class="w-full bg-[#945be3] text-white py-2 rounded-lg hover:bg-[#8143de]">
                     Se connecter
                 </button>
             </form>

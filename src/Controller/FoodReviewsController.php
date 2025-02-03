@@ -11,7 +11,7 @@ final class FoodReviewsController extends AbstractController
     #[Route('/food/reviews', name: 'app_food_reviews')]
     public function index(): Response
     {
-        return $this->render('food_reviews/index.html.twig', [
+        return $this->render('food_reviews/homepage.html.twig', [
             'controller_name' => 'FoodReviewsController',
         ]);
     }
