@@ -15,15 +15,6 @@ class CountryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Country::class);
     }
-    public function findFlagByCountryCode(string $countryCode): ?Country
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.country_code = :code')
-            ->setParameter('code', $countryCode)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
 
 //    /**
 //     * @return Country[] Returns an array of Country objects

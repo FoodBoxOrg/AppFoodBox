@@ -3,36 +3,22 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use App\Repository\CountryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[Get(
-    uriTemplate: '/country_flag/{country_code}',
-    output: 'json'
-)]
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 #[ApiResource]
 class Country
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(length: 8)]
+    private ?string $country_code = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     private ?string $url_flag = null;
-
-    #[ORM\Column(length: 8)]
-    private ?string $country_code = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getName(): ?string
     {
