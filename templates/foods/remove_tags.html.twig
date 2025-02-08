@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer des tags{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto mt-16 bg-[#3b3b3e] p-8 rounded-xl shadow-lg">
+        <h1 class="text-3xl font-bold text-white text-center mb-8">Supprimer des tags de {{ food.name }}</h1>
+
+        <form method="POST" action="{{ path('food_remove_tags', { id: food.id }) }}" class="space-y-6">
+            <!-- Liste des tags liés -->
+            <div class="flex flex-col space-y-2">
+                {% for foodTag in foodTags %}
+                    <label class="flex items-center space-x-2 text-white">
+                        <input
+                                type="checkbox"
+                                name="tags[]"
+                                value="{{ foodTag.tag.id }}"
+                                class="h-5 w-5 accent-red-600"
+                        >
+                        <span>{{ foodTag.tag.name }}</span>
+                    </label>
+                {% else %}
+                    <p class="text-gray-400 text-center">Aucun tag associé.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Bouton de suppression -->
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
+                Supprimer les tags sélectionnés
+            </button>
+        </form>
+    </div>
+{% endblock %}

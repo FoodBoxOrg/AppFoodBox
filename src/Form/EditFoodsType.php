@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Intl\Countries;
 
-class FoodsType extends AbstractType
+class EditFoodsType extends AbstractType
 {
     private EntityManagerInterface $entityManager;
 
@@ -44,29 +44,7 @@ class FoodsType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ])
-            ->add('foodTags', EntityType::class, [
-                'class' => Tags::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => false,
-                'mapped' => false,
-                'label' => 'Tags',
             ]);
-
-        //Pour enregistrer les tags sélectionnés dans la base de données
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            $food = $event->getData();
-            $form = $event->getForm();
-            $selectedTags = $form->get('foodTags')->getData();
-
-            foreach ($selectedTags as $tag) {
-                $foodTag = new FoodTags();
-                $foodTag->setFood($food);
-                $foodTag->setTag($tag);
-                $this->entityManager->persist($foodTag);
-            }
-        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -74,5 +52,7 @@ class FoodsType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Food::class,
         ]);
+
+        $resolver->setDefined('existing_tags');
     }
 }
