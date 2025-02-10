@@ -29,23 +29,18 @@ sandevistan14 -> Robin Lerouge
    php bin/console tailwind:build
    ```
 
-**4. Générer une migration de base de données 🛠️**
-   ```bash
-   php bin/console make:migration
-   ```
-
-**5. Exécuter les migrations de base de données 🗄️**
+**4. Exécuter les migrations de base de données 🗄️**
    ```bash
    php bin/console doctrine:migrations:migrate
    ```
 
-**6. Charger les données de test 🗂️**
+**5. Charger les données de test 🗂️**
    ```bash
    php bin/console doctrine:fixtures:load
    ```
 ⚠️ Attention : Cette commande réinitialisera les données existantes en base !
 
-**7. Démarrez le serveur 🚀** 
+**6. Démarrez le serveur 🚀** 
    ```bash
    symfony serve
    ```
