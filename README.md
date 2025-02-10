@@ -1,10 +1,10 @@
-# 🚀 Projet Symfony - AppFoodBoxApp 🍽️
+# 🚀 Projet Symfony - AppFoodBoxApp
 
 ## 📖 Description
 AppFoodBox est une application permettant de :  
-✅ Lister les repas déjà mangés 🍛  
-⭐ Leur attribuer une note ⭐  
-👥 Consulter le profil de vos amis 👀  
+✅ Lister les repas déjà mangés
+⭐ Leur attribuer une note
+👥 Consulter le profil de vos amis
 
 ## 👥 Collaborateur
 👤 Rackyrr -> Valentin Lestrelin  
