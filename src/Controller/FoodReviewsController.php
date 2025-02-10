@@ -98,7 +98,7 @@ class FoodReviewsController extends AbstractController
 
             $this->addFlash('success', 'Votre review a bien été enregistrée !');
 
-            return $this->redirectToRoute('food_review_list');
+            return $this->redirectToRoute('food_list');
         }
 
         return $this->render('food_reviews/food_review.html.twig', [
