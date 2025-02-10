@@ -102,29 +102,4 @@ class FoodReviewsController extends AbstractController
             'food' => $food,
         ]);
     }
-
-    #[Route('/review/create', name: 'review_create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
-    {
-        $review = new Review();
-
-        $review->setUser($this->getUser());
-
-        $form = $this->createForm(FoodReviewType::class, $review);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($review);
-            $em->flush();
-
-            $this->addFlash('success', 'Review créée avec succès !');
-
-            return $this->redirectToRoute('homepage');
-        }
-
-        return $this->render('review/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
 }

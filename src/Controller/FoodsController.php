@@ -99,7 +99,6 @@ final class FoodsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Persistance du Food
             $em->persist($food);
 
             $em->flush();

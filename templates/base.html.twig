@@ -27,6 +27,7 @@
 
                         <!-- Menu déroulant -->
                         <div id="userMenu" class="absolute right-0 mr-4 top-10 transform translate-x-8 hidden bg-white shadow-md rounded-md mt-4 w-48">
+                            <a href="{{ path('user_reviews', { id: app.user.id }) }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Voir mes reviews</a>
                             <a href="{{ path('app_logout') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Déconnexion</a>
                         </div>
                     </div>
