@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 //test
 #[Route('/review')]
 class FoodReviewsController extends AbstractController
@@ -61,6 +63,7 @@ class FoodReviewsController extends AbstractController
      *
      * GET|POST /foods/{id}/review
      */
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/{id}/rate', name: 'food_review', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function review(
         int $id,
@@ -102,29 +105,4 @@ class FoodReviewsController extends AbstractController
             'food' => $food,
         ]);
     }
-
-    #[Route('/review/create', name: 'review_create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
-    {
-        $review = new Review();
-
-        $review->setUser($this->getUser());
-
-        $form = $this->createForm(FoodReviewType::class, $review);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($review);
-            $em->flush();
-
-            $this->addFlash('success', 'Review créée avec succès !');
-
-            return $this->redirectToRoute('homepage');
-        }
-
-        return $this->render('review/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
 }
