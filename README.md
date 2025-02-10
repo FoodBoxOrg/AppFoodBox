@@ -13,29 +13,34 @@ AppFoodBox est une application permettant de :
 
 ## ⚙️ Installation
 
-**1️⃣ Clonez le dépôt 🛠️**
+**1. Clonez le dépôt 🛠️**
    ```bash
    git clone https://github.com/FoodBoxOrg/AppFoodBox
    cd AppFoodBox
    ```
 
-**2️⃣ Installation des dépendances 📦**
+**2. Installation des dépendances 📦**
    ```bash
    composer install
    ```
 
-**3️⃣ Build Tailwind 🎨**
+**3. Build Tailwind 🎨**
    ```bash
    php bin/console tailwind:build
    ```
 
-**4️⃣ Charger les données de test 🗂️**
+**4. Exécuter les migrations de base de données 🗄️**
+   ```bash
+   php bin/console doctrine:migrations:migrate
+   ```
+
+**5. Charger les données de test 🗂️**
    ```bash
    php bin/console doctrine:fixtures:load
    ```
 ⚠️ Attention : Cette commande réinitialisera les données existantes en base !
 
-**5️⃣ Démarrez le serveur 🚀** 
+**6. Démarrez le serveur 🚀** 
    ```bash
    symfony serve
    ```
