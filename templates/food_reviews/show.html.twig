@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Food Details{% endblock %}
+
+{% block body %}
+    <!-- Conteneur principal -->
+    <div class="max-w-3xl mx-auto bg-[#3b3b3e] text-white p-6 rounded-lg shadow-md mt-8">
+
+        <!-- Titre du food -->
+        <h1 class="text-4xl font-bold mb-2">Food : {{ food.name }}</h1>
+        <div class="text-gray-200 mb-6">
+            <strong>{{ food.name }}</strong>
+            {% if food.origin is not null %}
+                — Origine : {{ food.origin }}
+            {% endif %}
+        </div>
+
+        <!-- Bloc des reviews -->
+        <div>
+            <h2 class="text-3xl mb-4">Reviews</h2>
+
+            <!-- Nombre de reviews et moyenne -->
+            <div class="mb-4">
+                <p class="mb-1">
+                    <span class="font-semibold">Nombre de reviews :</span> {{ reviews_count }}
+                </p>
+                <p>
+                    <span class="font-semibold">Moyenne :</span> {{ average }} ⭐️
+                </p>
+            </div>
+
+            <!-- Liste des reviews -->
+            {% if reviews is not empty %}
+                <ul class="space-y-4 bg-[#3b3b3e]">
+                    {% for review in reviews %}
+                        <li class="p-4 rounded bg-[#2f2f33] shadow">
+                            <div class="flex items-center mb-4 gap-x-3">
+                                <!-- Avatar -->
+                                <img src="https://ui-avatars.com/api/?background=945be3&color=fff&name={{ review.user.username }}"
+                                     alt="{{ review.user.username }}" class="w-10 h-10 rounded-full object-cover">
+
+                                <span class="font-semibold text-gray-100 text-xl">{{ review.user.username }}</span>
+                                <span class="text-yellow-300 ml-5">{{ review.rate }} ⭐️</span>
+                            </div>
+                            <p class="text-gray-200">
+                                {{ review.comment }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-300">Aucun avis disponible pour ce food.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
