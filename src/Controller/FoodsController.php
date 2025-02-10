@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/foods')]
 final class FoodsController extends AbstractController
@@ -92,6 +93,7 @@ final class FoodsController extends AbstractController
      * Exemple d'appel (soumission du formulaire) –
      * * Les données sont récupérées depuis $request→request (type application/x-www-form-urlencoded ou multipart/form-data).
      */
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/create', name: 'food_create', methods: ['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $em): Response {
         $food = new Food();
@@ -121,6 +123,7 @@ final class FoodsController extends AbstractController
      * Exemple d'appel (soumission du formulaire) –
      * * Les données sont récupérées depuis $request→request (type application/x-www-form-urlencoded ou multipart/form-data).
      */
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/{id}/edit', name: 'food_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(int $id, Request $request, EntityManagerInterface $em, FoodRepository $foodRepository,): Response {
 
@@ -153,6 +156,7 @@ final class FoodsController extends AbstractController
      *
      * Exemple d'appel : DELETE /foods/42
      */
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/{id}', name: 'food_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(int $id, EntityManagerInterface $em, FoodRepository $foodRepository): Response
     {
@@ -180,6 +184,7 @@ final class FoodsController extends AbstractController
      *
      * Ajouter un ou plusieurs tags
      */
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/{id}/tags/add', name: 'food_add_tags', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function addTag(int $id, Request $request, EntityManagerInterface $em, FoodRepository $foodRepository,
     TagsRepository $tagsRepository): Response
@@ -232,6 +237,7 @@ final class FoodsController extends AbstractController
      *
      * Supprimer un ou plusieurs tags
      */
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/{id}/tags/remove', name: 'food_remove_tags', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function removeTag(int $id, Request $request, EntityManagerInterface $em, FoodRepository $foodRepository,
                               FoodTagsRepository $foodTagsRepository): Response

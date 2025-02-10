@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/tags')]
 final class TagsController extends AbstractController
@@ -40,6 +41,7 @@ final class TagsController extends AbstractController
             'tag' => $tag,
         ]);
     }
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/create', name: 'tags_create', methods: ['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
