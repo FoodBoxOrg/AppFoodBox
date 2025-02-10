@@ -3,13 +3,23 @@
 {% block title %}
     Mes reviews - FoodBox
 {% endblock %}
-
 {% block body %}
-    <!-- Conteneur principal -->
+    <!-- Informations sur l'utilisateur -->
+    <div class="flex items-center gap-x-4 mb-8">
+        <img
+                src="https://ui-avatars.com/api/?background=945be3&color=fff&name={{ user.username }}"
+                alt="{{ user.username }}"
+                class="w-14 h-14 rounded-full object-cover"
+        />
+        <div>
+            <h2 class="text-2xl font-semibold">{{ user.username }}</h2>
+            <p class="text-gray-300">{{ user.email }}</p>
+        </div>
+    </div>
     <div class="max-w-4xl mx-auto bg-[#3b3b3e] text-white p-8 rounded-lg shadow-md">
-        <h1 class="text-3xl font-bold mb-4">Mes reviews</h1>
+        <h1 class="text-3xl font-bold mb-6">Mes reviews</h1>
 
-        <!-- Informations globales -->
+        <!-- Informations globales sur les reviews -->
         <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-y-4 mb-6">
             <p class="text-gray-200">
                 <span class="font-semibold">Nombre de reviews :</span> {{ reviews_count }}
@@ -25,9 +35,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {% for review in reviews %}
                     <div class="bg-[#2f2f33] rounded-md shadow p-4 hover:bg-[#4a4a4e] transition-colors duration-300">
-                        <h2 class="text-xl text-white font-semibold mb-2">{{ review.food.name }}</h2>
-                        <p class="text-yellow-300 mb-2">Note : {{ review.rate }} ⭐️</p>
-                        <p class="text-gray-200">{{ review.comment }}</p>
+                        <h2 class="text-xl text-white font-semibold mb-2">
+                            {{ review.food.name }}
+                        </h2>
+                        <p class="text-yellow-300 mb-2">
+                            Note : {{ review.rate }} ⭐️
+                        </p>
+                        <p class="text-gray-200">
+                            {{ review.comment }}
+                        </p>
                     </div>
                 {% endfor %}
             </div>
