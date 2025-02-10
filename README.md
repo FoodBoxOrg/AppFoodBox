@@ -29,7 +29,13 @@ AppFoodBox est une application permettant de :
    php bin/console tailwind:build
    ```
 
-**4️⃣ Démarrez le serveur 🚀** 
+**4️⃣ Charger les données de test 🗂️**
+   ```bash
+   php bin/console doctrine:fixtures:load
+   ```
+⚠️ Attention : Cette commande réinitialisera les données existantes en base !
+
+**5️⃣ Démarrez le serveur 🚀** 
    ```bash
    symfony serve
    ```
