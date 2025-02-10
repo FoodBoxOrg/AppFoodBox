@@ -15,7 +15,7 @@
                             <strong class="text-white">{{ food.name }}</strong>
                             {% if food.origin is not null %}
                                 <span class="text-white">— Origine : {{ food.origin }}</span>
-                                {% if food.flag is not null %}
+                                {% if food.flag is defined and food.flag is not null %}
                                     <img src="{{ food.flag }}" alt="Drapeau de {{ food.origin }}" class="inline-block w-6 h-4 ml-2">
                                 {% endif %}
                             {% endif %}
@@ -24,7 +24,6 @@
                             Voir les reviews
                         </a>
                     </li>
-
                 {% endfor %}
             </ul>
         </div>
