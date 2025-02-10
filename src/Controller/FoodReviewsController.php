@@ -50,7 +50,7 @@ class FoodReviewsController extends AbstractController
         return $this->render('food_reviews/show.html.twig', [
             'food' => $food,
             'reviews' => $reviews,
-            'average' => $average,
+            'average' => round($average,1),
             'reviews_count' => count($reviews),
         ]);
     }
