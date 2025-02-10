@@ -1,33 +1,35 @@
-# Projet Symfony - AppFoodBoxA
+# 🚀 Projet Symfony - AppFoodBoxApp 🍽️
 
-## Description
-AppFoodBox est une application dans laquelle on peut lister les repas que l'on a déjà mangés, leur attribuer une note, et consulter le profil de nos amis.  
-Ce projet utilise Symfony, un framework PHP.  
+## 📖 Description
+AppFoodBox est une application permettant de :  
+✅ Lister les repas déjà mangés 🍛  
+⭐ Leur attribuer une note ⭐  
+👥 Consulter le profil de vos amis 👀  
 
-## Collaborateur
-Rackyrr -> Valentin Lestrelin  
-chiyeb -> chiheb bradai  
-sandevistan14 -> Robin Lerouge  
+## 👥 Collaborateur
+👤 Rackyrr -> Valentin Lestrelin  
+👤 chiyeb -> chiheb bradai  
+👤 sandevistan14 -> Robin Lerouge  
 
-## Installation
+## ⚙️ Installation
 
-1. **Clonez le dépôt** :
+**1️⃣ Clonez le dépôt 🛠️**
    ```bash
    git clone https://github.com/FoodBoxOrg/AppFoodBox
    cd AppFoodBox
    ```
 
-2. **Installation des dépendances** :
+**2️⃣ Installation des dépendances 📦**
    ```bash
    composer install
    ```
 
-3. **Build Tailwind** :
+**3️⃣ Build Tailwind 🎨**
    ```bash
    php bin/console tailwind:build
    ```
 
-4. **Démarrez le serveur** :
+**4️⃣ Démarrez le serveur 🚀** 
    ```bash
    symfony serve
    ```
