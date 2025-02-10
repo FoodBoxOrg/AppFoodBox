@@ -15,16 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route('/foods')]
 final class FoodsController extends AbstractController
 {
-    /**
-     * Récupère tous les foods et les affiche via Twig.
-     *
-     * Exemple d'appel : GET /foods/
-     */
+    public function __construct(private HttpClientInterface $httpClient)
+    {
+    }
+
     #[Route('/', name: 'food_list', methods: ['GET'])]
     public function list(FoodRepository $foodRepository): Response
     {
@@ -32,10 +31,20 @@ final class FoodsController extends AbstractController
         $data = [];
 
         foreach ($foods as $food) {
-            // On parcourt les FoodTags pour récupérer le nom de chaque tag
             $tags = [];
             foreach ($food->getFoodTags() as $foodTag) {
                 $tags[] = $foodTag->getTag()->getName();
+            }
+
+            $flagUrl = null;
+            if ($food->getOrigin()) {
+                try {
+                    $response = $this->httpClient->request('GET', 'http://127.0.0.1:8001/api/countries/' . $food->getOrigin());
+                    $flagData = $response->toArray();
+                    $flagUrl = $flagData['url_flag'] ?? $flagData['urlFlag'] ?? null;
+                } catch (\Exception $e) {
+                    $flagUrl = null;
+                }
             }
 
             $data[] = [
@@ -44,6 +53,7 @@ final class FoodsController extends AbstractController
                 'origin'   => $food->getOrigin(),
                 'imageId'  => $food->getImageId(),
                 'tags'     => $tags,
+                'flag'     => $flagUrl,
             ];
         }
 
@@ -51,6 +61,7 @@ final class FoodsController extends AbstractController
             'foods' => $data,
         ]);
     }
+
 
     /**
      * Récupère un food en particulier par son id et l'affiche via Twig.
@@ -187,7 +198,7 @@ final class FoodsController extends AbstractController
     #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
     #[Route('/{id}/tags/add', name: 'food_add_tags', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function addTag(int $id, Request $request, EntityManagerInterface $em, FoodRepository $foodRepository,
-    TagsRepository $tagsRepository): Response
+                           TagsRepository $tagsRepository): Response
     {
         $food = $foodRepository->find($id);
 

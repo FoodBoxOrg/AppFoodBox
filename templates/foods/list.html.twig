@@ -7,21 +7,27 @@
     <h1>Liste des Foods</h1>
 
     {% if foods is not empty %}
-        <ul>
-            {% for food in foods %}
-                <li style="margin-bottom: 1em;">
-                    <div>
-                        <strong>{{ food.name }}</strong>
-                        {% if food.origin is not null %}
-                            &mdash; Origine : {{ food.origin }}
-                        {% endif %}
-                    </div>
-                    <div>
-                        <a href="{{ path('food_review_show', { id: food.id }) }}">Voir les reviews</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="flex justify-center">
+            <ul class="w-1/2 bg-[#3b3b3e] p-6 rounded-lg shadow-lg">
+                {% for food in foods %}
+                    <li class="mb-4 p-4 border-b flex justify-between items-center">
+                        <div>
+                            <strong class="text-white">{{ food.name }}</strong>
+                            {% if food.origin is not null %}
+                                <span class="text-white">— Origine : {{ food.origin }}</span>
+                                {% if food.flag is not null %}
+                                    <img src="{{ food.flag }}" alt="Drapeau de {{ food.origin }}" class="inline-block w-6 h-4 ml-2">
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <a href="{{ path('food_show', { id: food.id }) }}" class="text-blue-400 hover:text-blue-300 font-semibold">
+                            Voir les reviews
+                        </a>
+                    </li>
+
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
         <p>Aucun food n'est disponible.</p>
     {% endif %}
