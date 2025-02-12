@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Food;
 use App\Entity\FoodTags;
-use App\Entity\Tags;
 use App\Form\EditFoodsType;
 use App\Form\FoodsType;
 use App\Repository\FoodRepository;
@@ -52,7 +51,6 @@ final class FoodsController extends AbstractController
                 'id'       => $food->getId(),
                 'name'     => $food->getName(),
                 'origin'   => $food->getOrigin(),
-                'imageId'  => $food->getImageId(),
                 'tags'     => $tags,
                 'flag'     => $flagUrl,
             ];
@@ -87,7 +85,6 @@ final class FoodsController extends AbstractController
             'id'       => $food->getId(),
             'name'     => $food->getName(),
             'origin'   => $food->getOrigin(),
-            'imageId'  => $food->getImageId(),
             'tags'     => $tags,
         ];
 

@@ -21,9 +21,6 @@ class Food
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $origin = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $imageId = null;
-
     #[ORM\OneToMany(targetEntity: FoodTags::class, mappedBy: 'food', cascade: ['persist', 'remove'])]
     private Collection $foodTags;
 
@@ -56,17 +53,6 @@ class Food
     public function setOrigin(?string $origin): static
     {
         $this->origin = $origin;
-        return $this;
-    }
-
-    public function getImageId(): ?int
-    {
-        return $this->imageId;
-    }
-
-    public function setImageId(?int $imageId): static
-    {
-        $this->imageId = $imageId;
         return $this;
     }
 

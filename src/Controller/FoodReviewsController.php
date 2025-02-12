@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Food;
 use App\Entity\Review;
-use App\Form\FoodReviewType;
 use App\Repository\FoodRepository;
 use App\Repository\ReviewRepository;
+use App\Service\MistralService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +33,13 @@ class FoodReviewsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'food_review_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function show(int $id, FoodRepository $foodRepository, ReviewRepository $reviewRepository): Response
+    public function show(int $id, FoodRepository $foodRepository, ReviewRepository $reviewRepository,
+                         MistralService $mistralService): Response
     {
         $food = $foodRepository->find($id);
+        $description = $mistralService
+            ->generateText('Génère une description détaillée pour un plat nommé ' . $food->getName()
+                . '. Juste la description, pas de recette, et elle doit faire maximum 230 caractères surtout.');
         $reviews = $reviewRepository->findBy(['food' => $food]);
         $average = 0;
         for($i = 0; $i < count($reviews); $i++){
@@ -51,6 +55,7 @@ class FoodReviewsController extends AbstractController
 
         return $this->render('food_reviews/show.html.twig', [
             'food' => $food,
+            'description' => $description,
             'reviews' => $reviews,
             'average' => round($average,1),
             'reviews_count' => count($reviews),

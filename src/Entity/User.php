@@ -29,8 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
     #[ORM\Column(length: 30)]
     private ?string $username = null;
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imageurl = null;
     #[ORM\Column]
     private bool $isVerified = false;
     public function getId(): ?int
@@ -102,15 +100,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): static
     {
         $this->username = $username;
-        return $this;
-    }
-    public function getImageurl(): ?string
-    {
-        return $this->imageurl;
-    }
-    public function setImageurl(?string $imageurl): static
-    {
-        $this->imageurl = $imageurl;
         return $this;
     }
     public function isVerified(): bool
