@@ -9,6 +9,7 @@ use App\Form\FoodsType;
 use App\Repository\FoodRepository;
 use App\Repository\FoodTagsRepository;
 use App\Repository\TagsRepository;
+use App\Service\CountryService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,7 @@ final class FoodsController extends AbstractController
     }
 
     #[Route('/', name: 'food_list', methods: ['GET'])]
-    public function list(FoodRepository $foodRepository): Response
+    public function list(FoodRepository $foodRepository, CountryService $countryService): Response
     {
         $foods = $foodRepository->findAll();
         $data = [];
@@ -38,13 +39,7 @@ final class FoodsController extends AbstractController
 
             $flagUrl = null;
             if ($food->getOrigin()) {
-                try {
-                    $response = $this->httpClient->request('GET', 'http://127.0.0.1:8001/api/countries/' . $food->getOrigin());
-                    $flagData = $response->toArray();
-                    $flagUrl = $flagData['url_flag'] ?? $flagData['urlFlag'] ?? null;
-                } catch (\Exception $e) {
-                    $flagUrl = null;
-                }
+                $flagUrl = $countryService->getFlag($food->getOrigin());
             }
 
             $data[] = [
