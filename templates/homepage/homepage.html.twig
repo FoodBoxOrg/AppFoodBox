@@ -1,10 +1,48 @@
+{# templates/homepage/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Foodbox{% endblock %}
+{% block title %}Accueil - FoodBox{% endblock %}
 
 {% block body %}
-    Page ratatouille
-    <div {{ react_component('MyButton',{})}}>
-    </div>
+    <div class="flex justify-center items-center min-h-screen">
+        <!-- Bloc principal agrandi sur tous les écrans, et encore plus sur md/lg -->
+        <div class="bg-[#3b3b3e] text-white p-12 rounded-lg shadow-xl text-center w-full md:w-3/4 lg:w-2/3">
 
+            <h1 class="text-5xl font-bold mb-8">Bienvenue sur FoodBox</h1>
+
+            <!-- Ligne des 4 boutons -->
+            <div class="flex flex-wrap justify-center gap-6 mb-8">
+                <a href="{{ path('app_homepage') }}"
+                   class="bg-[#945be3] hover:bg-violet-600 px-6 py-3 rounded text-lg font-semibold transition">
+                    Accueil
+                </a>
+
+                {# À adapter si tu as un nom de route spécifique pour l'Avis #}
+                <a href="{{ path('food_review_list') }}"
+                   class="bg-[#945be3] hover:bg-violet-600 px-6 py-3 rounded text-lg font-semibold transition">
+                    Avis
+                </a>
+
+                <a href="{{ path('food_list') }}"
+                   class="bg-[#945be3] hover:bg-violet-600 px-6 py-3 rounded text-lg font-semibold transition">
+                    Nourriture
+                </a>
+
+                <a href="{{ path('tags_list') }}"
+                   class="bg-[#945be3] hover:bg-violet-600 px-6 py-3 rounded text-lg font-semibold transition">
+                    Tags
+                </a>
+            </div>
+
+            <!-- Bouton S'identifier (uniquement si l'utilisateur n'est pas connecté) -->
+            {% if not app.user %}
+                <div class="mt-6">
+                    <a href="{{ path('app_login') }}"
+                       class="bg-violet-800 hover:bg-violet-900 px-6 py-3 rounded text-lg font-semibold transition">
+                        S'identifier
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
