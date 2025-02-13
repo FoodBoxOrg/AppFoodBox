@@ -137,7 +137,6 @@ final class FoodsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Persistance du Food
             $em->persist($food);
 
             $em->flush();
@@ -279,28 +278,24 @@ final class FoodsController extends AbstractController
      * Exemple d'appel : GET /foods/tag/Italien
      */
     #[Route('/tag/{tagName}', name: 'food_by_tag', methods: ['GET'])]
-    public function listByTag(string $tagName, TagsRepository $tagsRepository): Response
+    public function listByTag(string $tagName, TagsRepository $tagsRepository, CountryService $countryService): Response
     {
         $tag = $tagsRepository->findOneBy(['name' => $tagName]);
-
         if (!$tag) {
             throw $this->createNotFoundException('Tag non trouvé');
         }
 
         $foods = [];
         foreach ($tag->getFoodTags() as $foodTag) {
-            $food = $foodTag->getFood();
-            $foods[] = [
-                'id'      => $food->getId(),
-                'name'    => $food->getName(),
-                'origin'  => $food->getOrigin(),
-                'imageId' => $food->getImageId(),
-            ];
+            $foods[] = $foodTag->getFood();
         }
-
+        foreach ($foods as $food) {
+            $food->setFlag($countryService->getFlag($food->getOrigin()));
+        }
         return $this->render('foods/list_by_tag.html.twig', [
             'tagName' => $tagName,
             'foods'   => $foods,
         ]);
     }
+
 }

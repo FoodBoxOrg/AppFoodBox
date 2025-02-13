@@ -14,7 +14,7 @@
                         <strong>{{ tag.name }}</strong>
                     </div>
                     <div>
-                        <a href="{{ path('tags_show', { id: tag.id }) }}">Voir les plats</a>
+                        <a href="{{ path('food_by_tag', { tagName: tag.name }) }}">Voir les plats</a>
                     </div>
                 </li>
             {% endfor %}

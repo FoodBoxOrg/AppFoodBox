@@ -9,7 +9,15 @@
 
         <!-- Origine -->
         {% if food.origin is not null %}
-            <p class="text-lg text-gray-300 mb-4">🌍 Origine : <span class="font-semibold">{{ food.origin }}</span></p>
+            <p class="text-lg text-gray-300 mb-4">
+                🌍 Origine :
+                <span class="font-semibold">
+                    {{ food.origin }}
+                    {% if food.flag is defined and food.flag is not null %}
+                        <img src="{{ food.flag }}" alt="Drapeau de {{ food.origin }}" class="inline-block w-6 h-4 ml-2">
+                    {% endif %}
+                </span>
+            </p>
         {% endif %}
 
         <!-- Section Description -->
@@ -18,6 +26,25 @@
             <p class="text-gray-300 text-lg leading-relaxed">
                 {{ description is not empty ? description : "Aucune description disponible pour ce plat." }}
             </p>
+        </div>
+
+        <!-- Section tags -->
+        <div class="border-t border-gray-500 pt-6 mt-6 mb-6">
+            <h2 class="text-2xl font-semibold text-white mb-4">Tags</h2>
+            {% if food.foodTags is not empty %}
+                <ul class="flex flex-wrap gap-3">
+                    {% for foodTag in food.foodTags %}
+                        <li>
+                            <a href="{{ path('food_by_tag', { tagName: foodTag.tag.name }) }}"
+                               class="inline-block py-2 px-4 text-lg font-semibold bg-violet-600 hover:bg-violet-700 rounded text-white transition">
+                                {{ foodTag.tag.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-400">Aucun tag associé à ce plat.</p>
+            {% endif %}
         </div>
 
         <!-- Section Avis -->
@@ -51,7 +78,6 @@
                                 <!-- Avatar -->
                                 <img src="https://ui-avatars.com/api/?background=945be3&color=fff&name={{ review.user.username }}"
                                      alt="{{ review.user.username }}" class="w-12 h-12 rounded-full object-cover shadow-md">
-
                                 <div class="ml-4">
                                     <p class="font-semibold text-xl text-white">{{ review.user.username }}</p>
                                     <p class="text-yellow-400 text-lg">{{ review.rate }} ⭐️</p>

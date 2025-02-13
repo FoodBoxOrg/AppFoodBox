@@ -24,6 +24,8 @@ class Food
     #[ORM\OneToMany(targetEntity: FoodTags::class, mappedBy: 'food', cascade: ['persist', 'remove'])]
     private Collection $foodTags;
 
+    private ?string $flag = null;
+
     public function __construct()
     {
         $this->foodTags = new ArrayCollection();
@@ -39,6 +41,16 @@ class Food
         return $this->name;
     }
 
+    public function getFlag(): ?string
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(string $flag): static
+    {
+        $this->flag = $flag;
+        return $this;
+    }
     public function setName(string $name): static
     {
         $this->name = $name;

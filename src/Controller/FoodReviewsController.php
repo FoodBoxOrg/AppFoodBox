@@ -6,6 +6,7 @@ use App\Entity\Food;
 use App\Entity\Review;
 use App\Repository\FoodRepository;
 use App\Repository\ReviewRepository;
+use App\Service\CountryService;
 use App\Service\MistralService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 //test
 #[Route('/review')]
@@ -32,11 +34,15 @@ class FoodReviewsController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/{id}', name: 'food_review_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id, FoodRepository $foodRepository, ReviewRepository $reviewRepository,
-                         MistralService $mistralService): Response
+                         MistralService $mistralService,  CountryService $countryService): Response
     {
         $food = $foodRepository->find($id);
+        $food->setFlag($countryService->getFlag($food->getOrigin()));
         $description = $mistralService
             ->generateText('Génère une description détaillée pour un plat nommé ' . $food->getName()
                 . '. Juste la description, pas de recette, et elle doit faire maximum 230 caractères surtout.');
@@ -47,10 +53,6 @@ class FoodReviewsController extends AbstractController
         }
         if (count($reviews) > 0){
             $average = $average / count($reviews);
-        }
-
-        if (!$food) {
-            throw $this->createNotFoundException('Food not found');
         }
 
         return $this->render('food_reviews/show.html.twig', [
