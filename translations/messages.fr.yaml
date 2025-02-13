@@ -1,0 +1,102 @@
+app.title: "FoodBox"
+
+menu:
+  home: "Accueil"
+  food: "Nourriture"
+  tags: "Tags"
+  my_reviews: "Voir mes reviews"
+  logout: "Déconnexion"
+  login: "Connexion"
+
+food_review:
+  title: "Noter le Food : %food_name%"
+  heading: "Noter le Food"
+  rate_label: "Note (1 à 5) :"
+  comment_label: "Commentaire :"
+  submit_button: "Envoyer"
+
+food_details:
+  title: "Détails"
+  origin: "Origine"
+  description: "Description"
+  by: "par"
+  no_description: "Aucune description disponible pour ce plat"
+  reviews_title: "Avis des utilisateurs"
+  add_review: "Ajouter un avis"
+  reviews_count: "Nombre de reviews"
+  average_rating: "Moyenne des avis"
+  no_reviews: "Aucun avis disponible pour ce plat"
+
+food_add_tags:
+  title: "Ajouter des tags"
+  heading: "Ajouter des tags à"
+  no_tags: "Aucun tag disponible à ajouter."
+  add_tags_button: "Ajouter les tags"
+
+food_create:
+  title: "Créer un plat"
+  heading: "Créer un plat"
+  name_label: "Nom"
+  origin_label: "Origine"
+  tags_label: "Tags"
+  submit_button: "Créer"
+
+food_edit:
+  title: "Modifier un plat"
+  heading: "Modifier {{ foodName }}"
+  name_label: "Nom"
+  origin_label: "Origine"
+  submit_button: "Mettre à jour"
+
+food_list:
+  title: "Liste des Foods"
+  heading: "Liste des Nourritures"
+  origin: "Origine"
+  flag_alt: "Drapeau de {{ origin }}"
+  view_reviews: "Voir les reviews"
+  no_foods: "Aucun food n'est disponible"
+
+tag_remove:
+  title: "Supprimer des tags"
+  heading: "Supprimer des tags de {{ food_name }}"
+  no_tags: "Aucun tag associé"
+  delete_button: "Supprimer les tags sélectionnés"
+
+registration:
+  title: "Inscription"
+  heading: "Inscription"
+  email_label: "Email"
+  username_label: "Nom d'utilisateur"
+  password_label: "Mot de passe"
+  submit_button: "S'inscrire"
+  already_have_account: "Déjà un compte ?"
+  login_link: "Se connecter"
+
+login:
+  title: "Connexion"
+  heading: "Connexion"
+  email_label: "Email"
+  password_label: "Mot de passe"
+  remember_me: "Se souvenir de moi"
+  create_account: "Créer un compte"
+  submit_button: "Se connecter"
+
+tag:
+  create:
+    title: "Créer un Tag"
+    heading: "Créer un Tag"
+    submit_button: "Créer"
+  list:
+    title: "Liste des Tags"
+    heading: "Liste des Tags"
+    view_dishes: "Voir les plats"
+    no_tags: "Aucun Tag n'est disponible."
+
+review:
+  list:
+    title: "Mes reviews"
+    heading: "Mes reviews"
+    total_reviews: "Nombre de reviews"
+    average: "Moyenne"
+    rating: "Note"
+    no_reviews: "Aucune review à afficher"

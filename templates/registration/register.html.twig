@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}{{ 'registration.title'|trans }}{% endblock %}
 
 {% block body %}
     <div class="flex items-center justify-center bg-[#27272a] pt-[7%]">
@@ -12,7 +12,7 @@
                 </div>
             {% endfor %}
 
-            <h1 class="text-2xl font-semibold text-[#ffffff] text-center mb-6">Inscription</h1>
+            <h1 class="text-2xl font-semibold text-[#ffffff] text-center mb-6">{{ 'registration.heading'|trans }}</h1>
 
             {{ form_start(registrationForm, { attr: { class: 'space-y-4' } }) }}
 
@@ -24,7 +24,7 @@
             {% endif %}
 
             <div>
-                <label for="{{ registrationForm.email.vars.id }}" class="block text-sm font-medium text-[#ffffff]">Email</label>
+                <label for="{{ registrationForm.email.vars.id }}" class="block text-sm font-medium text-[#ffffff]">{{ 'registration.email_label'|trans }}</label>
                 {{ form_widget(registrationForm.email, { attr: { class: 'mt-1 block w-full px-4 py-2 border border-[#515153] bg-[#515153] text-white rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500' } }) }}
                 <p class="text-red-500 text-sm mt-1">
                     {% for error in registrationForm.email.vars.errors %}
@@ -34,7 +34,7 @@
             </div>
 
             <div>
-                <label for="{{ registrationForm.username.vars.id }}" class="block text-sm font-medium text-[#ffffff]">Nom d'utilisateur</label>
+                <label for="{{ registrationForm.username.vars.id }}" class="block text-sm font-medium text-[#ffffff]">{{ 'registration.username_label'|trans }}</label>
                 {{ form_widget(registrationForm.username, { attr: { class: 'mt-1 block w-full px-4 py-2 border border-[#515153] bg-[#515153] text-white rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500' } }) }}
                 <p class="text-red-500 text-sm mt-1">
                     {% for error in registrationForm.username.vars.errors %}
@@ -44,7 +44,7 @@
             </div>
 
             <div>
-                <label for="{{ registrationForm.plainPassword.vars.id }}" class="block text-sm font-medium text-[#ffffff]">Mot de passe</label>
+                <label for="{{ registrationForm.plainPassword.vars.id }}" class="block text-sm font-medium text-[#ffffff]">{{ 'registration.password_label'|trans }}</label>
                 {{ form_widget(registrationForm.plainPassword, { attr: { class: 'mt-1 block w-full px-4 py-2 border border-[#515153] bg-[#515153] text-white rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500' } }) }}
                 <p class="text-red-500 text-sm mt-1">
                     {% for error in registrationForm.plainPassword.vars.errors %}
@@ -54,15 +54,15 @@
             </div>
 
             <button type="submit" class="w-full bg-[#945be3] text-white py-2 rounded-lg hover:bg-[#8143de]">
-                S'inscrire
+                {{ 'registration.submit_button'|trans }}
             </button>
 
             {{ form_end(registrationForm) }}
 
             <div class="mt-4 text-center">
-                <p class="text-[#ffffff]">Déjà un compte ?</p>
+                <p class="text-[#ffffff]">{{ 'registration.already_have_account'|trans }}</p>
                 <a href="{{ path('app_login') }}" class="text-[#945be3] px-4 py-2 hover:text-[#8143de]">
-                    Se connecter
+                    {{ 'registration.login_link'|trans }}
                 </a>
             </div>
         </div>

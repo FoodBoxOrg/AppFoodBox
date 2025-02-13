@@ -33,3 +33,8 @@ services:
     App\Service\CountryService:
         arguments:
             $countryApiUrl: '%country_api_url%'
+
+    App\EventSubscriber\LocaleSubscriber:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_subscriber }

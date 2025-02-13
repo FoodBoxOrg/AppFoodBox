@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier un plat{% endblock %}
+{% block title %}{{ 'food_edit.title'|trans }}{% endblock %}
 
 {% block body %}
     <div class="max-w-2xl mx-auto mt-16 bg-[#3b3b3e] p-8 rounded-xl shadow-lg">
-        <h1 class="text-3xl font-bold text-white text-center mb-8">Modifier {{ foodName }}</h1>
+        <h1 class="text-3xl font-bold text-white text-center mb-8">{{ 'food_edit.heading'|trans({'%foodName%': foodName}) }}</h1>
 
         <!-- Formulaire -->
         {{ form_start(form, { attr: { class: 'space-y-8' } }) }}
 
         <!-- Champ Nom -->
         <div class="flex flex-col">
-            <label for="{{ form.name.vars.id }}" class="text-white font-semibold mb-2">Nom</label>
+            <label for="{{ form.name.vars.id }}" class="text-white font-semibold mb-2">{{ 'food_edit.name_label'|trans }}</label>
             {{ form_widget(form.name, { attr: { class: 'w-full p-4 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-violet-600 focus:outline-none' } }) }}
             {% if form_errors(form.name) %}
                 <p class="text-red-500 text-sm mt-1">{{ form_errors(form.name) }}</p>
@@ -20,7 +20,7 @@
 
         <!-- Champ Origine -->
         <div class="flex flex-col">
-            <label for="{{ form.origin.vars.id }}" class="text-white font-semibold mb-2">Origine</label>
+            <label for="{{ form.origin.vars.id }}" class="text-white font-semibold mb-2">{{ 'food_edit.origin_label'|trans }}</label>
             {{ form_widget(form.origin, { attr: { class: 'w-full p-4 mt-1 bg-zinc-800 text-white border border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-violet-600 focus:outline-none' } }) }}
             {% if form_errors(form.origin) %}
                 <p class="text-red-500 text-sm mt-1">{{ form_errors(form.origin) }}</p>
@@ -32,7 +32,7 @@
                 type="submit"
                 class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300"
         >
-            Créer
+            {{ 'food_edit.submit_button'|trans }}
         </button>
 
         {{ form_end(form) }}

@@ -1,0 +1,102 @@
+app.title: "FoodBox"
+menu:
+  home: "Home"
+  food: "Food"
+  tags: "Tags"
+  my_reviews: "See my reviews"
+  logout: "Logout"
+  login: "Login"
+
+food_review:
+  title: "Rate the Food: %food_name%"
+  heading: "Rate the Food"
+  rate_label: "Rating (1 to 5) :"
+  comment_label: "Comment :"
+  submit_button: "Submit"
+
+food_details:
+  title: "Details"
+  origin: "Origin"
+  description: "Description"
+  by: "by"
+  no_description: "No description available for this food"
+  reviews_title: "User reviews"
+  add_review: "Add a review"
+  reviews_count: "Number of reviews"
+  average_rating: "Average rating"
+  no_reviews: "No reviews available for this food"
+
+food_add_tags:
+  title: "Add tags"
+  heading: "Add tags to"
+  no_tags: "No tags available to add."
+  add_tags_button: "Add tags"
+
+food_create:
+  title: "Create a dish"
+  heading: "Create a dish"
+  name_label: "Name"
+  origin_label: "Origin"
+  tags_label: "Tags"
+  submit_button: "Create"
+
+food_edit:
+  title: "Edit a dish"
+  heading: "Edit {{ foodName }}"
+  name_label: "Name"
+  origin_label: "Origin"
+  submit_button: "Update"
+
+food_list:
+  title: "Food List"
+  heading: "Food List"
+  origin: "Origin"
+  flag_alt: "Flag of {{ origin }}"
+  view_reviews: "View reviews"
+  no_foods: "No food available"
+
+
+tag_remove:
+  title: "Remove Tags"
+  heading: "Remove tags from {{ food_name }}"
+  no_tags: "No tags associated"
+  delete_button: "Delete selected tags"
+
+registration:
+  title: "Registration"
+  heading: "Registration"
+  email_label: "Email"
+  username_label: "Username"
+  password_label: "Password"
+  submit_button: "Sign Up"
+  already_have_account: "Already have an account?"
+  login_link: "Login"
+
+login:
+  title: "Login"
+  heading: "Login"
+  email_label: "Email"
+  password_label: "Password"
+  remember_me: "Remember me"
+  create_account: "Create an account"
+  submit_button: "Log in"
+
+tag:
+  create:
+    title: "Create a Tag"
+    heading: "Create a Tag"
+    submit_button: "Create"
+  list:
+    title: "List of Tags"
+    heading: "List of Tags"
+    view_dishes: "View dishes"
+    no_tags: "No tags available."
+
+review:
+  list:
+    title: "My Reviews"
+    heading: "My Reviews"
+    total_reviews: "Total Reviews"
+    average: "Average"
+    rating: "Rating"
+    no_reviews: "No reviews to display"

@@ -1,14 +1,13 @@
-{# templates/tags/create.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un Tag{% endblock %}
+{% block title %}{{ 'tag.create.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Créer un Tag</h1>
+    <h1>{{ 'tag.create.heading'|trans }}</h1>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
 
-    <button type="submit" class="btn btn-primary">Créer</button>
+    <button type="submit" class="btn btn-primary">{{ 'tag.create.submit_button'|trans }}</button>
     {{ form_end(form) }}
 {% endblock %}

@@ -1,10 +1,10 @@
 {# templates/foods/list.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Tags{% endblock %}
+{% block title %}{{ 'tag.list.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des Tags</h1>
+    <h1>{{ 'tag.list.heading'|trans }}</h1>
 
     {% if tags is not empty %}
         <ul>
@@ -14,12 +14,12 @@
                         <strong>{{ tag.name }}</strong>
                     </div>
                     <div>
-                        <a href="{{ path('food_by_tag', { tagName: tag.name }) }}">Voir les plats</a>
+                        <a href="{{ path('food_by_tag', { tagName: tag.name }) }}">{{ 'tag.list.view_dishes'|trans }}</a>
                     </div>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Aucun Tag n'est disponible.</p>
+        <p>{{ 'tag.list.no_tags'|trans }}</p>
     {% endif %}
 {% endblock %}

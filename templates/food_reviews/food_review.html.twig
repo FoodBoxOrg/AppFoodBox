@@ -1,7 +1,6 @@
-{# templates/review/food_review.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Noter le Food : {{ food.name }}{% endblock %}
+{% block title %}{{ 'food_review.title'|trans({'food_name': food.name}) }}{% endblock %}
 
 {% block body %}
     <!-- Conteneur pour centrer la "carte" -->
@@ -9,14 +8,14 @@
         <!-- Carte avec couleur de fond gris foncé (similaire au nav), texte blanc -->
         <div class="bg-[#3b3b3e] text-white p-6 rounded-lg shadow-md w-full max-w-md">
             <h1 class="text-2xl font-bold mb-4 text-center">
-                Noter le Food :
+                {{ 'food_review.heading'|trans }} :
                 <span class="text-gray-300">{{ food.name }}</span>
             </h1>
 
             <form method="POST" action="" class="space-y-6">
                 <!-- Slider pour la note -->
                 <div>
-                    <label for="rate" class="block mb-2 font-medium text-gray-200">Note (1 à 5) :</label>
+                    <label for="rate" class="block mb-2 font-medium text-gray-200">{{ 'food_review.rate_label'|trans }}</label>
                     <input
                             type="range"
                             id="rate"
@@ -31,7 +30,7 @@
 
                 <!-- Champ commentaire -->
                 <div>
-                    <label for="comment" class="block mb-2 font-medium text-gray-200">Commentaire :</label>
+                    <label for="comment" class="block mb-2 font-medium text-gray-200">{{ 'food_review.comment_label'|trans }}</label>
                     <textarea
                             id="comment"
                             name="comment"
@@ -45,7 +44,7 @@
                         type="submit"
                         class="bg-[#945be3] hover:bg-violet-600 text-white font-semibold py-2 px-4 rounded transition"
                 >
-                    Envoyer
+                    {{ 'food_review.submit_button'|trans }}
                 </button>
             </form>
         </div>

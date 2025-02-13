@@ -1,10 +1,11 @@
-{# templates/foods/list.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Foods{% endblock %}
+{% block title %}{{ 'food_list.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des Foods</h1>
+    <div class="text-center p-4">
+        <h1 class="text-4xl font-bold">{{ 'food_list.heading'|trans }}</h1>
+    </div>
 
     {% if foods is not empty %}
         <div class="flex justify-center">
@@ -14,20 +15,20 @@
                         <div>
                             <strong class="text-white">{{ food.name }}</strong>
                             {% if food.origin is not null %}
-                                <span class="text-white">— Origine : {{ food.origin }}</span>
+                                <span class="text-white">— {{ 'food_list.origin'|trans }} : {{ food.origin }}</span>
                                 {% if food.flag is defined and food.flag is not null %}
-                                    <img src="{{ food.flag }}" alt="Drapeau de {{ food.origin }}" class="inline-block w-6 h-4 ml-2">
+                                    <img src="{{ food.flag }}" alt="{{ 'food_list.flag_alt'|trans({'%origin%': food.origin}) }}" class="inline-block w-6 h-4 ml-2">
                                 {% endif %}
                             {% endif %}
                         </div>
                         <a href="{{ path('food_review_show', { id: food.id }) }}" class="text-blue-400 hover:text-blue-300 font-semibold">
-                            Voir les reviews
+                            {{ 'food_list.view_reviews'|trans }}
                         </a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
     {% else %}
-        <p>Aucun food n'est disponible.</p>
+        <p>{{ 'food_list.no_foods'|trans }}</p>
     {% endif %}
 {% endblock %}
