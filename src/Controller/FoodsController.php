@@ -21,9 +21,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[Route('/foods')]
 final class FoodsController extends AbstractController
 {
-    public function __construct(private HttpClientInterface $httpClient)
-    {
-    }
 
     #[Route('/', name: 'food_list', methods: ['GET'])]
     public function list(FoodRepository $foodRepository, CountryService $countryService): Response
